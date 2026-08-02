@@ -209,7 +209,8 @@
     <div id="bootStep-displayCode" style="display:none;">
       <h1>ENTER CODE</h1>
       <p>Type the pairing code shown on your phone:</p>
-      <input id="codeInput" maxlength="4" placeholder="----" autocomplete="off" autocapitalize="characters">
+      <input id="codeInput" maxlength="4" placeholder="----" autocomplete="off" autocorrect="off" spellcheck="false" name="visorPairCode" inputmode="text" autocapitalize="characters" tabindex="0">
+      <div style="font-size:10px; color:var(--text-dim); margin-top:6px; letter-spacing:1px;">TAP THE BOX ABOVE FIRST, THEN TYPE</div>
       <div>
         <button id="displayConnectBtn" style="margin-top:14px;">CONNECT</button>
       </div>
@@ -436,8 +437,10 @@
     role = 'display';
     stepRole.style.display = 'none';
     stepDisplayCode.style.display = 'block';
-    codeInput.focus();
+    setTimeout(()=>{ codeInput.focus(); codeInput.click(); }, 50);
   });
+  codeInput.addEventListener('click', ()=> codeInput.focus());
+  codeInput.addEventListener('input', ()=>{ codeInput.value = codeInput.value.toUpperCase(); });
   document.getElementById('displayConnectBtn').addEventListener('click', tryConnectDisplay);
   codeInput.addEventListener('keydown', (e)=>{ if(e.key==='Enter') tryConnectDisplay(); });
 
