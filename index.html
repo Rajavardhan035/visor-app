@@ -197,9 +197,8 @@
         <button class="role-btn" id="pickCamera"><span class="big">CAM</span>CAMERA<small>THIS DEVICE HAS THE VIEW</small></button>
         <button class="role-btn" id="pickDisplay"><span class="big">OUT</span>DISPLAY<small>THIS DEVICE SHOWS OUTPUT</small></button>
       </div>
+      <p style="margin-top:18px;"><a href="#" id="changeKeyLink" style="color:var(--text-dim); font-size:11px; letter-spacing:1px; font-family:'Share Tech Mono',monospace; text-decoration:underline;">CHANGE API KEY</a></p>
     </div>
-
-    <div id="bootStep-cameraCode" style="display:none;">
       <h1>PAIRING CODE</h1>
       <p>Enter this code on your laptop's VISOR screen:</p>
       <div id="codeDisplay">----</div>
@@ -253,6 +252,7 @@
     <div id="controls">
       <div class="ctrl-btn" id="flipBtn" title="Switch camera">FLIP</div>
       <div class="ctrl-btn active" id="voiceBtn" title="Toggle voice">VOX</div>
+      <div class="ctrl-btn" id="resetKeyBtn" title="Change API key">KEY</div>
     </div>
   </div>
 
@@ -399,6 +399,13 @@
     facingMode = facingMode === 'environment' ? 'user' : 'environment';
     startCamera();
   });
+
+  function resetApiKey(){
+    localStorage.removeItem('visor_gemini_key');
+    location.reload();
+  }
+  document.getElementById('resetKeyBtn').addEventListener('click', resetApiKey);
+  document.getElementById('changeKeyLink').addEventListener('click', (e)=>{ e.preventDefault(); resetApiKey(); });
 
   function makeCode(){
     const chars = 'ABCDEFGHJKMNPQRSTUVWXYZ23456789';
